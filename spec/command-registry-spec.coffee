@@ -1,6 +1,6 @@
 CommandRegistry = require '../src/command-registry'
 
-describe "CommandRegistry", ->
+fdescribe "CommandRegistry", ->
   [registry, parent, child, grandchild] = []
 
   beforeEach ->
@@ -98,10 +98,12 @@ describe "CommandRegistry", ->
       expect(calls).toEqual ['child-1']
       expect(dispatchedEvent.stopImmediatePropagation).toHaveBeenCalled()
 
-    it "forwards .preventDefault() calls from the synthetic event to the original", ->
+    ffit "forwards .preventDefault() calls from the synthetic event to the original", ->
       calls = []
 
-      registry.add '.child', 'command', (event) -> event.preventDefault()
+      registry.add '.child', 'command', (event) ->
+        debugger unless event.preventDefault?
+        event.preventDefault()
 
       dispatchedEvent = new CustomEvent('command', bubbles: true)
       spyOn(dispatchedEvent, 'preventDefault')
